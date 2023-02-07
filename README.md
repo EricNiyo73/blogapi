@@ -19,21 +19,21 @@
 <li>Testing</li>
 </ul>
 create posts
-<span><strong>POST  </strong><br></span>https://blog1-pabd.onrender.com/api/posts/create<br>
+<span><strong>POST  </strong><br></span>https://newblog-m4im.onrender.com/api/posts/create<br>
 get all posts
-<span><strong>GET</strong></span><br>https://blog1-pabd.onrender.com/api/posts<br><br><span>
+<span><strong>GET</strong></span><br>https://newblog-m4im.onrender.com/api/posts<br><br><span>
 delete a posts by using blogid
-<strong>DELETE</strong></span>https://blog1-pabd.onrender.com/api/posts/blogId<br><br>
+<strong>DELETE</strong></span>https://newblog-m4im.onrender.com/api/posts/blogId<br><br>
 update a posts by using blogid<br>
-<span><strong>PUT </strong></span><br><span>https://blog1-pabd.onrender.com/api/posts/blogId<br><br>
+<span><strong>PUT </strong></span><br><span>https://newblog-m4im.onrender.com/api/posts/blogId<br><br>
 get one blog by using blog<br>
-<span> <strong>GET  </strong></span><br>https://blog1-pabd.onrender.com/api/posts/blogId<br><br>
+<span> <strong>GET  </strong></span><br>https://newblog-m4im.onrender.com/api/posts/blogId<br><br>
 add a comment to a posts by using blog<br>
-<span><strong>POST</strong></span><br>https://blog1-pabd.onrender.com/api/comment/blogs/blogID/comments<br><br>
+<span><strong>POST</strong></span><br>https://newblog-m4im.onrender.com/api/comment/blogs/blogID/comments<br><br>
 user registration for<br>
-<span> <strong>POST  </strong></span><br>https://blog1-pabd.onrender.com/api/auth/register</span><br>
+<span> <strong>POST  </strong></span><br>https://newblog-m4im.onrender.com/api/auth/register</span><br>
 user login for<br>
-<span><strong>POST </strong></span><br>https://blog1-pabd.onrender.com/api/auth/login<br><br>
+<span><strong>POST </strong></span><br>hhttps://newblog-m4im.onrender.com/api/auth/login<br><br>
 
 <h2>All endpoints are tested<h2>
 <h3>Major Dependencies</h3>
