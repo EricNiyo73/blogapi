@@ -7,6 +7,37 @@ import jwt from "jsonwebtoken";
 //REGISTER
 
  const create = async (req, res) => {
+    /**
+   * @swagger
+   * /register:
+   *   post:
+   *     description: Register a new user
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: username
+   *         description: The username of the new user
+   *         in: body
+   *         required: true
+   *         type: string
+   *       - name: email
+   *         description: The email of the new user
+   *         in: body
+   *         required: true
+   *         type: string
+   *       - name: password
+   *         description: The password of the new user
+   *         in: body
+   *         required: true
+   *         type: string
+   *     responses:
+   *       201:
+   *         description: A successful response
+   *       409:
+   *         description: Email already exists
+   *       500:
+   *         description: Internal server error
+   */
  
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(req.body.password,salt);
@@ -52,6 +83,36 @@ import jwt from "jsonwebtoken";
   };
     export {create};
 //LOGIN
+/**
+ * @swagger
+ * path:
+ *  /login:
+ *    post:
+ *      summary: Log in a user
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                username:
+ *                  type: string
+ *                  description: The username of the user
+ *                  example: user123
+ *                password:
+ *                  type: string
+ *                  description: The password of the user
+ *                  example: pass123
+ *      responses:
+ *        "200":
+ *          description: Login success
+ *        "400":
+ *          description: Invalid credentials
+ *        "500":
+ *          description: Internal server error
+ */
 export const findOne = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });

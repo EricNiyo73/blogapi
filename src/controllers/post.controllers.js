@@ -155,7 +155,9 @@ export const findAll = async (req, res) => {
     } else {
       posts = await Post.find();
     }
-    return res.status(200).json(posts);
+    return res.status(200).json({
+      data: posts
+    });
   } catch (err) {
     return res.status(500).json(err);
   }
