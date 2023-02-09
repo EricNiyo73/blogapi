@@ -52,17 +52,17 @@ mongoose
 //   res.status(200).json("File has been uploaded");
 // });
 
-// const corsOpts = {
-//   origin: '*',
+const corsOpts = {
+  origin: '*',
   
-//   methods: [
-//   'GET',
-//   'POST',
-//   'DELETE',
-//   'PUT'
-//   ],
-// };
-// app.use(cors(corsOpts))
+  methods: [
+  'GET',
+  'POST',
+  'DELETE',
+  'PUT'
+  ],
+};
+app.use(cors(corsOpts))
 const options = {
   swaggerDefinition: {
       openapi: '3.0.0',
