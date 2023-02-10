@@ -1,8 +1,7 @@
 // const router = require("express").Router();
-import { Router } from 'express';
+import  Router  from 'express';
 const router = Router();
 import  User from "../models/User.js";
-import Post from "../models/Post.js";
 import bcrypt from "bcrypt";
 
 // sign up
@@ -64,6 +63,20 @@ export const findone = async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
+};
+
+
+// getall================================
+
+export const findAll = (req, res) => {
+  User.find()
+  .then(users => {
+    return  res.send(users);
+  }).catch(err => {
+    return  res.status(500).send({
+          message: err.message || "Some error occurred while retrieving user."
+      });
+  });
 };
 
 export default router;

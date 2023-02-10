@@ -19,7 +19,7 @@ export default {
       ],
       responses: {
         200: {
-          description: "Blog retrieved successfully",
+          description: " You have retrieved one blog  successfully",
           schema: {
             type: "object",
             properties: {
@@ -31,11 +31,11 @@ export default {
                 type: "string",
                 description: "Title of the blog post",
               },
-              content: {
+              desc: {
                 type: "string",
                 description: "Content of the blog post",
               },
-              image: {
+              photo: {
                 type: "string",
                 description: "Image URL of the blog post",
               },

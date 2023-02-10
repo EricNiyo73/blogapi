@@ -35,7 +35,7 @@ export var upload = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
-      if (ext !== ".JPG" && ext !== ".JPEG" && ext !== ".PNG") {
+      if (ext !== ".JPG" && ext !== ".JPEG" && ext !== ".PNG" && ext !== ".jpg") {
       cb(new Error("File type is not supported"), false);
       return;
     }
@@ -65,24 +65,6 @@ export const create = async (req, res) => {
           
       }
   }
-
-//   const newPost = new Post({
-//     title: req.body.title,
-//     desc: req.body.desc, 
-//     //  photo: req.body.photo,
-//     username: req.body.username,
-//     categories: req.body.categories
-//   })
-//   try {
-//     const savedPost = await newPost.save();
-//   //  const uploaded = await upload.save();
-//     res.status(200).json({
-//       savedPost,
-//     message:"file uploaded"});
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 //UPDATE POST
 export const updatep = async (req, res) => {

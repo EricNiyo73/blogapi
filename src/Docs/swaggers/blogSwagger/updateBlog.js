@@ -21,12 +21,12 @@ export default {
                 title: {
                   type: "string",
                   description: "Title of the blog post",
-                  example: "How to Build a RESTful API",
+                  example: "Best way to study Node js",
                 },
                 content: {
                   type: "string",
                   description: "Content of the blog post",
-                  example: "Building a RESTful API is a great way to...",
+                  example: "Node js is the best programming language language",
                 },
                 image: {
                   type: "file",

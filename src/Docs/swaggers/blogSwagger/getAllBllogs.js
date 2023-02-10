@@ -6,7 +6,7 @@ export default {
       parameters: [],
       responses: {
         200: {
-          description: "Blogs retrieved successfully",
+          description: " you have retrieved Blogs  successfully",
           schema: {
             type: "array",
             items: {
@@ -14,8 +14,10 @@ export default {
               properties: {
                 _id: { type: "string" },
                 title: { type: "string" },
-                content: { type: "string" },
-                image: { type: "string" },
+                desc: { type: "string" },
+                photo: { type: "string" },
+                username: { type: "string" },
+                categories: { type: "string" },
               },
             },
           },

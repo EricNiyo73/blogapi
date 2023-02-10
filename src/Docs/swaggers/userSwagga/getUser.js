@@ -2,7 +2,7 @@ export default {
     get: {
       tags: ["User API"],
       description: "Get all users",
-      operationId: "getUsers",
+      operationId: "getUser",
       parameters: [],
       responses: {
         200: {

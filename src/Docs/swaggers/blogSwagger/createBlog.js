@@ -11,20 +11,28 @@ export default {
               properties: {
                 title: {
                   type: "string",
-                  description: "Title of the blog post",
-                  example: "How to Build a RESTful API",
+                  description: "Title of the blog",
+                  example: "Best way to study Node js",
                 },
                 content: {
                   type: "string",
                   description: "Content of the blog post",
-                  example: "Building a RESTful API is a great way to...",
+                  example: "Node js is the best programming language language",
                 },
-                image: {
+                photo: {
                   type: "file",
                   description: "Image for the blog post",
                 },
+                username: {
+                  type: "string",
+                  description: "your name",
+                },
+                categories: {
+                  type: "string",
+                  description: "categories of the blog post",
+                },
               },
-              required: ["title", "content", "image"],
+              required: ["title", "content", "image", "author", "categories"],
             },
           },
         },
@@ -43,13 +51,21 @@ export default {
                 type: "string",
                 description: "Title of the created blog post",
               },
-              content: {
+              desc: {
                 type: "string",
                 description: "Content of the created blog post",
               },
-              image: {
+              photo: {
                 type: "string",
                 description: "Image URL of the created blog post",
+              },
+              username: {
+                type: "string",
+                description: "success",
+              },
+              category: {
+                type: "string",
+                description: "category added successfully",
               },
             },
           },

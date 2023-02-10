@@ -35,6 +35,9 @@ export default {
         400: {
           description: "Invalid input provided",
         },
+        401: {
+          description: "not authorized first create an account",
+        },
         404: {
           description: "Blog or user not found",
         },
