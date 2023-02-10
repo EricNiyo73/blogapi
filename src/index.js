@@ -82,7 +82,7 @@ const options = {
             bearerAuth: []
         }],
         servers: [{
-            url: 'https://localhost:5000'
+            url: 'https://newblog-m4im.onrender.com'
         }]
       
     },
