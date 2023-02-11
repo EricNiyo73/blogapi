@@ -1,6 +1,64 @@
 import  Router  from 'express';
 const router = Router();
 import {update,findone,deletet,findAll} from '../controllers/users.controllers.js';
+
+/**
+ * @swagger
+ *  /api/users/{id}:
+ *    put:
+ *      summary: Update a user's information by ID
+ *      tags: [Users]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: The ID of the user to update
+ *        - in: body
+ *          name: user information
+ *          required: true
+ *          description: The updated user information
+ *          schema:
+ *            type: object
+ *            properties:
+ *              userId:
+ *                type: string
+ *                description: The ID of the user to update
+ *              username:
+ *                type: string
+ *                description: The username of the user
+ *              email:
+ *                type: string
+ *                description: The email of the user
+ *              password:
+ *                type: string
+ *                description: The password of the user
+ *      responses:
+ *        "200":
+ *          description: The updated user information
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  _id:
+ *                    type: string
+ *                    description: The unique ID of the user
+ *                  username:
+ *                    type: string
+ *                    description: The username of the user
+ *                  email:
+ *                    type: string
+ *                    description: The email of the user
+ *                  password:
+ *                    type: string
+ *                    description: The hashed password of the user
+ *        "401":
+ *          description: Only the user can update their account
+ *        "500":
+ *          description: Internal server error
+ */
   router.put('/:id',update);
   router.get('/getone/:id',findone);
   router.get("/getall",findAll);

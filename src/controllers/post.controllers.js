@@ -7,8 +7,6 @@ import User from "../models/User.js";
 import multer from "multer";
 import path from "path";
 import express from "express";
-import authorizeUser from "../middlewires/middleware.js"
-import authentication from "../middlewires/mustHveAccount.js";
 const app = express();
 router.use("/images", express.static(path.join(process.cwd(), "/images")));
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -34,14 +32,18 @@ cloudinary.config({
 export var upload = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
-    let ext = path.extname(file.originalname);
-      if (ext !== ".JPG" && ext !== ".JPEG" && ext !== ".PNG" && ext !== ".jpg") {
-      cb(new Error("File type is not supported"), false);
-      return;
+    try {
+      let ext = path.extname(file.originalname);
+      if (ext !== ".JPG" && ext !== ".JPEG" && ext !== ".PNG" && ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png"){
+        return cb(new Error("File type is not supported"), false);
+      }
+      cb(null, true);
+    } catch (error) {
+      return cb(error, false);
     }
-    cb(null, true);
   },
 });
+
 export const create = async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path);

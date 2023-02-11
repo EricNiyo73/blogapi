@@ -17,13 +17,21 @@ import  mongoose from "mongoose";
  *           type: string
  *         description:
  *           type: string
- *         imageUrl:
+ *         photo:
  *           type: string
  *           format: URL
+ *         username:
+ *           type: string
+ *           descrition: Your username
+ *         categories:
+ *           type: string
+ *           descrition: category of the blog
  *       example:
  *         title: Blog title
  *         description: Blog description
- *         imageUrl: https://images.app.goo.gl/51augVvJcFVxJjV38 
+ *         imageUrl: https://images.app.goo.gl/51augVvJcFVxJjV38
+ *         username: Brenda
+ *         category: Entertainment
  */
 const PostSchema = new mongoose.Schema(
   {

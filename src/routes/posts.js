@@ -16,10 +16,13 @@ import {upload,create ,findAll,findOne,updatep,deletep} from '../controllers/pos
  *    tags: [Blog]
  *    consumes:
  *      - multipart/form-data
+ *    security:
+ *      - bearerAuth: []
  *    parameters:
  *      - in: formData
  *        name: photo
  *        type: file
+ *        format: URL
  *        required: true
  *        description: The photo of the post
  *      - in: formData
@@ -82,7 +85,7 @@ router.post('/create',authentication,upload.single("photo"),create);
 router.get('/', findAll);
 /**
  * @swagger
- * /posts/{id}:
+ * /api/posts/{id}:
  *  get:
  *    description: Use to retrieve a single post by its ID
  *    tags: [Blog]
@@ -125,6 +128,8 @@ router.get('/:id',findOne);
  *   put:
  *     description: Update a post by id
  *     tags: [Blog]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -140,10 +145,10 @@ router.get('/:id',findOne);
  *               type: string
  *             desc:
  *               type: string
+ *             author:
+ *               type: string
  *             categories:
- *               type: array
- *               items:
- *                 type: string
+ *               type: string
  *     responses:
  *       200:
  *         description: Successfully updated the post
@@ -187,6 +192,8 @@ router.put('/:id',authentication, updatep);
  *        type: string
  *        required: true
  *        description: The username of the post owner
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *      200:
  *        description: The post has been deleted

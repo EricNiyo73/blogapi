@@ -38,7 +38,7 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               username:
  *                 type: string
  *                 description: The email for the user
  *               password:
