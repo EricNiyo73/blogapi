@@ -7,7 +7,7 @@ import {update,findone,deletet,findAll} from '../controllers/users.controllers.j
  *  /api/users/{id}:
  *    put:
  *      summary: Update a user's information by ID
- *      tags: [Users]
+ *      tags: [users]
  *      parameters:
  *        - in: path
  *          name: id
@@ -62,5 +62,37 @@ import {update,findone,deletet,findAll} from '../controllers/users.controllers.j
   router.put('/:id',update);
   router.get('/getone/:id',findone);
   router.get("/getall",findAll);
+  /**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     tags: [users]
+ *     description: Deletes a user
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user to delete
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: ID of the user who is making the request
+ *                 required: true
+ *     responses:
+ *       200:
+ *         description: User has been deleted
+ *       401:
+ *         description: You can delete only your account
+ *       404:
+ *         description: User not found
+ */
   router.delete('/:id',deletet);
 export default router;

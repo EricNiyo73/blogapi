@@ -14,37 +14,36 @@ import {upload,create ,findAll,findOne,updatep,deletep} from '../controllers/pos
  *  post:
  *    description: Use to create a new post
  *    tags: [Blog]
- *    consumes:
- *      - multipart/form-data
  *    security:
  *      - bearerAuth: []
- *    parameters:
- *      - in: formData
- *        name: photo
- *        type: file
- *        format: URL
- *        required: true
- *        description: The photo of the post
- *      - in: formData
- *        name: title
- *        type: string
- *        required: true
- *        description: The title of the post
- *      - in: formData
- *        name: desc
- *        type: string
- *        required: true
- *        description: The description of the post
- *      - in: formData
- *        name: username
- *        type: string
- *        required: true
- *        description: The username of the post creator
- *      - in: formData
- *        name: categories
- *        type: array
- *        required: true
- *        description: The categories of the post
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              photo:
+ *                type: string
+ *                format: binary
+ *                description: The photo of the post
+ *                required: true
+ *              title:
+ *                type: string
+ *                description: The title of the post
+ *                required: true
+ *              desc:
+ *                type: string
+ *                description: The description of the post
+ *                required: true
+ *              username:
+ *                type: string
+ *                description: The username of the post creator
+ *                required: true
+ *              categories:
+ *                type: array
+ *                description: The categories of the post
+ *                required: true
  *    responses:
  *      200:
  *        description: The newly created post
@@ -122,58 +121,57 @@ router.get('/', findAll);
  *        description: Internal Server Error
  */
 router.get('/:id',findOne);
-/**
- * @swagger
- * /api/posts/{id}:
- *   put:
- *     description: Update a post by id
- *     tags: [Blog]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The id of the post to be updated
- *       - in: body
- *         name: post
- *         required: true
- *         schema:
- *           type: object
- *           properties:
- *             title:
- *               type: string
- *             desc:
- *               type: string
- *             author:
- *               type: string
- *             categories:
- *               type: string
- *     responses:
- *       200:
- *         description: Successfully updated the post
- *         schema:
- *           type: object
- *           properties:
- *             _id:
- *               type: string
- *             photo:
- *               type: string
- *             title:
- *               type: string
- *             desc:
- *               type: string
- *             username:
- *               type: string
- *             categories:
- *               type: array
- *               items:
- *                 type: string
- *       401:
- *         description: Unauthorized, only the owner of the post can update it
- *       500:
- *         description: Internal server error
- */
+/** 
+* @swagger
+* /api/posts/{id}:
+*   put:
+*     description: Update a post
+*     tags:
+*       - Blog
+*     parameters:
+*       - name: id
+*         in: path
+*         description: ID of the post to update
+*         required: true
+*         type: string
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             properties:
+*               username:
+*                 type: string
+*                 description: The username of the post
+*                 required: true
+*               title:
+*                 type: string
+*                 description: The title of the post
+*                 required: true
+*               desc:
+*                 type: string
+*                 description: The description of the post
+*                 required: true
+*               photo:
+*                 type: string
+*                 format: binary
+*                 description: The photo URL of the post
+*                 required: true
+*               categories:
+*                 type: array
+*                 items:
+*                   type: string
+*                 description: The categories of the post
+*                 required: true
+*     responses:
+*       200:
+*         description: Successfully updated the post
+*       401:
+*         description: You can update only your post
+*       500:
+*         description: Internal server error
+*/
 router.put('/:id',authentication, updatep);
 /**
  * @swagger
@@ -187,7 +185,7 @@ router.put('/:id',authentication, updatep);
  *        type: string
  *        required: true
  *        description: The ID of the post to delete
- *      - in: body
+ *      - in: query
  *        name: username
  *        type: string
  *        required: true

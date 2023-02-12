@@ -70,15 +70,17 @@ const options = {
         },
         components: {
             securitySchemes: {
-                JWT: {
+                bearerAuth: {
                     type: 'apiKey',
-                    name: "Authorization",
+                    scheme: 'bearer',
+                    name: 'Authorization',
                     in: 'header',
+                    bearerFormat: 'JWT',
                 }
             }
         },
         security: [{
-            JWT: []
+            bearerAuth: []
         }],
         servers: [{
             url: 'https://newblog-m4im.onrender.com'
