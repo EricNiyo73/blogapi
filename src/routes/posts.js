@@ -132,7 +132,7 @@ router.get('/:id',findOne);
 *       - name: id
 *         in: path
 *         description: ID of the post to retrieve
-*         required: true
+*         required: false
 *         type: string
 *     responses:
 *       200:
@@ -178,7 +178,7 @@ router.put('/:id',authentication, updatep);
  *      - in: query
  *        name: username
  *        type: string
- *        required: true
+ *        required: false
  *        description: The username of the post owner
  *    security:
  *      - bearerAuth: []
