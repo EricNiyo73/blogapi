@@ -65,7 +65,7 @@ const create = async (req, res) => {
  *      requestBody:
  *        required: true
  *        content:
- *          application/json:
+ *          multipart/form-data:
  *            schema:
  *              type: object
  *              properties:
@@ -87,18 +87,19 @@ const create = async (req, res) => {
  */
 export const findOne = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
-    !user && res.status(400).json("Wrong credentials!");
+    const user = await User.findOne({username: req.body.username});
 
     const validated = await bcrypt.compare(req.body.password, user.password);
-    !validated && res.status(400).json("Wrong credentials!");
-    const token = jwt.sign({ id: result._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+    if(!user || !validated){
+      return res.status(201).json("Wrong credentis!");
+    }
+    else {
+      return res.status(200).json({
+        message:"logged successfull"
+      });
+    }
     // const { password, ...others } = user._doc;
-   return res.status(200).json({
-      token,
-      stutus: "logged successfully"
-    });
-  } catch (err) {
+  }catch (err) {
    return res.status(500).json(err);
   }
 };

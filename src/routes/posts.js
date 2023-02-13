@@ -124,44 +124,54 @@ router.get('/:id',findOne);
 /** 
 * @swagger
 * /api/posts/{id}:
-*   get:
-*     description: Retrieve a post by ID
+*   put:
+*     description: Update a post
 *     tags:
 *       - Blog
 *     parameters:
 *       - name: id
 *         in: path
-*         description: ID of the post to retrieve
-*         required: false
+*         description: ID of the post to update
+*         required: true
 *         type: string
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             properties:
+*               username:
+*                 type: string
+*                 description: The username of the post
+*                 required: true
+*               title:
+*                 type: string
+*                 description: The title of the post
+*                 required: true
+*               desc:
+*                 type: string
+*                 description: The description of the post
+*                 required: true
+*               photo:
+*                 type: string
+*                 format: binary
+*                 description: The photo URL of the post
+*                 required: true
+*               categories:
+*                 type: array
+*                 items:
+*                   type: string
+*                 description: The categories of the post
+*                 required: true
 *     responses:
 *       200:
-*         description: Successfully retrieved the post
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 id:
-*                   type: string
-*                 username:
-*                   type: string
-*                 title:
-*                   type: string
-*                 desc:
-*                   type: string
-*                 photo:
-*                   type: string
-*                 categories:
-*                   type: array
-*                   items:
-*                     type: string
-*       404:
-*         description: Post not found
+*         description: Successfully updated the post
+*       401:
+*         description: You can update only your post
 *       500:
 *         description: Internal server error
 */
-
 router.put('/:id',authentication, updatep);
 /**
  * @swagger
@@ -175,10 +185,10 @@ router.put('/:id',authentication, updatep);
  *        type: string
  *        required: true
  *        description: The ID of the post to delete
- *      - in: query
+ *      - in: body
  *        name: username
  *        type: string
- *        required: false
+ *        required: true
  *        description: The username of the post owner
  *    security:
  *      - bearerAuth: []
