@@ -23,7 +23,7 @@ import  mongoose from "mongoose";
  *           format: password
  *       example:
  *         username: Brenda
- *         email: admin@exampl.com
+ *         email: admin@gmail.com
  *         password: test12 
  */
 const UserSchema = new mongoose.Schema(
@@ -41,10 +41,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-    },
-    profilePic: {
-      type: String,
-      default: "",
     },
   },
 );

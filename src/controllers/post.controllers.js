@@ -72,7 +72,7 @@ export const create = async (req, res) => {
 export const updatep = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
+    // if (post.username === req.body.username) {
       try {
         const updatedPost = await Post.findByIdAndUpdate(
           req.params.id,
@@ -85,9 +85,9 @@ export const updatep = async (req, res) => {
       } catch (err) {
         res.status(500).json(err);
       }
-    } else {
-      return res.status(401).json("You can update only your post!");
-    }
+    // } else {
+    //   return res.status(401).json("You can update only your post!");
+    // }
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -97,16 +97,16 @@ export const updatep = async (req, res) => {
 export const deletep = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
+    // if (post.username === req.body.username) {
       try {
         await post.delete();
         return res.status(200).json("Post has been deleted...");
       } catch (err) {
         return  res.status(500).json(err);
       }
-    } else {
-      return res.status(401).json("You can delete only your post!");
-    }
+    // } else {
+    //   return res.status(401).json("You can delete only your post!");
+    // }
   } catch (err) {
     return res.status(500).json(err);
   }
