@@ -82,7 +82,7 @@ const options = {
 }
 const specs = swaggerJSDoc(options)
 app.get('/', (req, res) => {
-   return res.json({message: "Welcome  I am testing"});
+   return res.json({message: "Welcome  I am testing again"});
 });
 app.use("/api/comment", commentRoute);
 app.use("/api/auth", authRoute);
