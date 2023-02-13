@@ -48,18 +48,9 @@ mongoose
 // app.post("/api/upload", upload.single("file"), (req, res) => {
 //   res.status(200).json("File has been uploaded");
 // });
-const corsOpts = {
-    origin: '*',
-    
-    methods: [
-    'GET',
-    'POST',
-    'DELETE',
-    'PUT'
-    ],
-  };
 
-app.use(cors(corsOpts));
+
+app.use(cors());
 const options = {
     swaggerDefinition: {
         openapi: '3.0.0',
