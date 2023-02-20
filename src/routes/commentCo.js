@@ -80,14 +80,14 @@ router.post('/blogs/:blogId/comments',authentication, async (req, res) => {
 //   getall comments=======================
 
 
-router.get('/blogs/:blogId/comments',authentication, async (req, res) => {
-    const blogId = req.params.blogId;
-    try {
-      const comments = await Comment.find({ blogId: blogId });
-      return res.send(comments);
-    } catch (error) {
-      return res.status(400).send({ error: error.message });
-    }
-  });
+// router.get('/blogs/:blogId/comments',authentication, async (req, res) => {
+//     const blogId = req.params.blogId;
+//     try {
+//       const comments = await Comment.find({ blogId: blogId });
+//       return res.send(comments);
+//     } catch (error) {
+//       return res.status(400).send({ error: error.message });
+//     }
+//   });
 
   export default router;

@@ -10,7 +10,6 @@
 //      var decodedToken = jwt.verify(token, process.env.JWT_SECRET);;
 //       const  user  =  await User.findById(decodedToken._id);
 //       const post =await Post.findOne({username});
-      
 //     if (post.username !== user.username) {
 //       return res.status(403).json({ message: 'Forbidden' });
 //     }else{
@@ -23,4 +22,4 @@
 //     catch(error) {
 //        return  res.status(401).json({ error: new Error('Invalid request!') });
 //         }};
-    
+"use strict";

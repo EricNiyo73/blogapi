@@ -1,6 +1,17 @@
-import  Router  from 'express';
-const router = Router();
-import {update,deletet,findAll} from '../controllers/users.controllers.js';
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _express = _interopRequireDefault(require("express"));
+
+var _usersControllers = require("../controllers/users.controllers.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var router = (0, _express["default"])();
 
 /**
  * @swagger
@@ -59,40 +70,42 @@ import {update,deletet,findAll} from '../controllers/users.controllers.js';
  *        "500":
  *          description: Internal server error
  */
-  router.put('/:id',update);
-  // router.get('/getone/:id',findone);
-  router.get("/getall",findAll);
-  /**
- * @swagger
- * /api/users/{id}:
- *   delete:
- *     tags: [users]
- *     description: Deletes a user
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID of the user to delete
- *     requestBody:
- *       required: true
- *       content:
- *         application/x-www-form-urlencoded:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 description: ID of the user who is making the request
- *                 required: true
- *     responses:
- *       200:
- *         description: User has been deleted
- *       401:
- *         description: You can delete only your account
- *       404:
- *         description: User not found
- */
-  router.delete('/:id',deletet);
-export default router;
+router.put('/:id', _usersControllers.update); // router.get('/getone/:id',findone);
+
+router.get("/getall", _usersControllers.findAll);
+/**
+* @swagger
+* /api/users/{id}:
+*   delete:
+*     tags: [users]
+*     description: Deletes a user
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: string
+*         required: true
+*         description: ID of the user to delete
+*     requestBody:
+*       required: true
+*       content:
+*         application/x-www-form-urlencoded:
+*           schema:
+*             type: object
+*             properties:
+*               userId:
+*                 type: string
+*                 description: ID of the user who is making the request
+*                 required: true
+*     responses:
+*       200:
+*         description: User has been deleted
+*       401:
+*         description: You can delete only your account
+*       404:
+*         description: User not found
+*/
+
+router["delete"]('/:id', _usersControllers.deletet);
+var _default = router;
+exports["default"] = _default;

@@ -1,0 +1,21 @@
+import express from "express";
+const app = express();
+// import app from express();
+import dotenv from "dotenv";
+import cors from "cors";
+import mongoose from "mongoose";
+import authRoute from "../routes/auth.js";
+import userRoute from "../routes/users.js";
+import postRoute from "../routes/posts.js";
+import categoryRoute from "../routes/categories.js";
+import commentRoute from "../routes/commentCo.js";
+import bodyParser from 'body-parser';
+dotenv.config();
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use("/api/comment", commentRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+export default app;

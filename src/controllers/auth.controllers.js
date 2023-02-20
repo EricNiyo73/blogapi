@@ -13,7 +13,13 @@ const create = async (req, res) => {
 
     const existingEmail = await User.findOne({ email: req.body.email });
     const existingUsername = await User.findOne({ username: req.body.username });
-
+    // Email validation using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(req.body.email)) {
+      return res.status(400).json({
+        message: 'Invalid email format'
+      });
+    }
     if (existingEmail || existingUsername) {
       return res.status(409).json({
         message: 'Email or username already exists'
@@ -29,7 +35,7 @@ const create = async (req, res) => {
       newUser.save()
         .then(result => {
           const token = jwt.sign({ id: result._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
-          return res.status(201).json({
+          return res.status(200).json({
             status: 'success',
             token,
             data: {
@@ -91,11 +97,13 @@ export const findOne = async (req, res) => {
 
     const validated = await bcrypt.compare(req.body.password, user.password);
     if(!user || !validated){
-      return res.status(201).json("Wrong credentis!");
+      return res.status(201).json("Wrong credentials!");
     }
     else {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
       return res.status(200).json({
-        message:"logged successfull"
+        message: "Logged in successfully",
+        token: token
       });
     }
     // const { password, ...others } = user._doc;

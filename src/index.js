@@ -13,7 +13,6 @@ import bodyParser from 'body-parser';
 import swaggerUI from "swagger-ui-express";
 import  swaggerJSDoc from "swagger-jsdoc";
 // import { swaggerDoc } from 'swagger-json';
-import docs from "./Docs";
 // import { loginSpec, userSpec, blogSpec } from "./documentation/swagger";
 dotenv.config();
 app.use(express.json());
