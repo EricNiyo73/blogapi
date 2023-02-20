@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from './index.test';
+import app from './app';
 import Post from '../models/Post';
 import User from '../models/User';
 import fs from "fs";
@@ -7,6 +7,13 @@ import path from "path";
 import expect from "expect";
 import  mongoose  from 'mongoose';
 import multer from 'multer';
+import dotenv from "dotenv";
+import cors from "cors";
+import bodyParser from 'body-parser';
+dotenv.config();
+
+mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
 
 describe('POST /api/posts/create', () => {
   let token;
@@ -15,6 +22,13 @@ describe('POST /api/posts/create', () => {
   jest.setTimeout(30000)
   beforeAll(async () => {
     try{
+      mongoose
+  .connect(process.env.MONGO_TEST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify:true
+  })
       server = app.listen(3000);
     // Login user and get JWT token for authentication
     user = new User({

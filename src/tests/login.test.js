@@ -1,9 +1,13 @@
 import request from 'supertest';
-import app from './index.test';
+import app from './app.js';
 import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import  mongoose  from 'mongoose';
+import dotenv from "dotenv";
+dotenv.config();
+mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
 describe('POST /api/auth/signup', () => {
   let user;
   let hashedPassword;
@@ -11,6 +15,13 @@ describe('POST /api/auth/signup', () => {
     jest.setTimeout(30000)
   beforeAll(async () => {
     try {
+      mongoose
+      .connect(process.env.MONGO_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify:true
+      })
       server = app.listen(3000);
     await User.deleteMany();
 
@@ -32,7 +43,6 @@ describe('POST /api/auth/signup', () => {
     await User.deleteMany();
     await mongoose.connection.close();
     await server.close();
-    process.exit(0);
     }catch(err) {}
   });
   test('should login user with correct credentials', async () => {

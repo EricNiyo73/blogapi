@@ -4,7 +4,7 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _supertest = _interopRequireDefault(require("supertest"));
 
-var _index = _interopRequireDefault(require("./index.test"));
+var _app = _interopRequireDefault(require("./app.js"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
@@ -20,6 +20,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 _dotenv["default"].config();
 
+_mongoose["default"].Promise = global.Promise;
+
+_mongoose["default"].set("strictQuery", false);
+
 describe('POST /blogs/:blogId/comments', function () {
   var authToken;
   var blog;
@@ -32,17 +36,25 @@ describe('POST /blogs/:blogId/comments', function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            server = _index["default"].listen(3001); // Create a user and get an auth token
+
+            _mongoose["default"].connect(process.env.MONGO_TEST, {
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+              useCreateIndex: true,
+              useFindAndModify: true
+            });
+
+            server = _app["default"].listen(3001); // Create a user and get an auth token
 
             user = new _User["default"]({
               username: 'testuser',
               email: 'testuser@test.com',
               password: 'testpassword'
             });
-            _context.next = 5;
+            _context.next = 6;
             return regeneratorRuntime.awrap(user.save());
 
-          case 5:
+          case 6:
             authToken = _jsonwebtoken["default"].sign({
               id: user._id
             }, process.env.JWT_SECRET); // Create a blog to be used in the test
@@ -53,23 +65,23 @@ describe('POST /blogs/:blogId/comments', function () {
               username: "testuser",
               photo: "blogImg.jpg"
             });
-            _context.next = 9;
+            _context.next = 10;
             return regeneratorRuntime.awrap(blog.save());
 
-          case 9:
-            _context.next = 13;
+          case 10:
+            _context.next = 14;
             break;
 
-          case 11:
-            _context.prev = 11;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](0);
 
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 11]]);
+    }, null, null, [[0, 12]]);
   });
   afterAll(function _callee2() {
     return regeneratorRuntime.async(function _callee2$(_context2) {
@@ -111,7 +123,7 @@ describe('POST /blogs/:blogId/comments', function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post("/api/comment/blogs/".concat(blog._id, "/comments")).send({
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post("/api/comment/blogs/".concat(blog._id, "/comments")).send({
               text: 'Test comment',
               author: 'Test author'
             }));
@@ -141,7 +153,7 @@ describe('POST /blogs/:blogId/comments', function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/comment/blogs/123456789/comments').set('Authorization', "Bearer ".concat(authToken)).send({
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/comment/blogs/123456789/comments').set('Authorization', "Bearer ".concat(authToken)).send({
               text: 'Test comment',
               author: 'Test author'
             }));
@@ -171,7 +183,7 @@ describe('POST /blogs/:blogId/comments', function () {
           case 0:
             _context5.prev = 0;
             _context5.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post("/api/comment/blogs/".concat(blog._id, "/comments")).set('Authorization', "Bearer ".concat(authToken)).send({
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post("/api/comment/blogs/".concat(blog._id, "/comments")).set('Authorization', "Bearer ".concat(authToken)).send({
               text: 'Test comment',
               author: 'Test author'
             }));

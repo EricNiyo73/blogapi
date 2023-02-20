@@ -2,7 +2,7 @@
 
 var _supertest = _interopRequireDefault(require("supertest"));
 
-var _index = _interopRequireDefault(require("./index.test"));
+var _app = _interopRequireDefault(require("./app.js"));
 
 var _user = _interopRequireDefault(require("../models/user"));
 
@@ -10,14 +10,29 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // assuming this is the express app instance
+_dotenv["default"].config();
+
+_mongoose["default"].Promise = global.Promise;
+
+_mongoose["default"].set("strictQuery", false);
+
 describe('POST /api/auth/signup', function () {
   var server;
   jest.setTimeout(30000);
   beforeAll(function () {
-    server = _index["default"].listen(3000); // start server
+    _mongoose["default"].connect(process.env.MONGO_TEST, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: true
+    });
+
+    server = _app["default"].listen(3000); // start server
   });
   afterAll(function _callee() {
     return regeneratorRuntime.async(function _callee$(_context) {
@@ -57,7 +72,7 @@ describe('POST /api/auth/signup', function () {
               password: 'testpassword'
             };
             _context2.next = 4;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/signup').send(user));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/signup').send(user));
 
           case 4:
             res = _context2.sent;
@@ -91,7 +106,7 @@ describe('POST /api/auth/signup', function () {
               password: 'testpassword'
             };
             _context3.next = 4;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/signup').send(user));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/signup').send(user));
 
           case 4:
             res = _context3.sent;
@@ -123,7 +138,7 @@ describe('POST /api/auth/signup', function () {
               password: 'testpassword'
             };
             _context4.next = 4;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/signup').send(user));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/signup').send(user));
 
           case 4:
             res = _context4.sent;
@@ -155,7 +170,7 @@ describe('POST /api/auth/signup', function () {
               email: 'testuser@example.com'
             };
             _context5.next = 4;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/signup').send(user));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/signup').send(user));
 
           case 4:
             res = _context5.sent;

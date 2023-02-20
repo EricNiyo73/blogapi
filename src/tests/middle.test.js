@@ -2,8 +2,12 @@ import jwt from  'jsonwebtoken';
 import User from '../models/User';
 import authMiddleware from '../middlewires/mustHveAccount';
 import mongoose from 'mongoose';
-import app from './index.test'
+import app from './app'
 import request from 'supertest';
+import dotenv from "dotenv";
+dotenv.config();
+mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
 // Define mock user data for testing
 
 describe('authMiddleware', () => {
@@ -11,6 +15,13 @@ describe('authMiddleware', () => {
   let server;
   beforeAll(() => {
     try{
+      mongoose
+      .connect(process.env.MONGO_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify:true
+      })
       server = app.listen(3000);
     }catch(err){}
   });
@@ -46,7 +57,7 @@ describe('authMiddleware', () => {
         .post('/api/auth/signup')
         .send(user);
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    req.headers.authorization = `Bearer ${token}`;
+    req.headers.authorization = `${token}`;
     User.findById = jest.fn().mockResolvedValue(user);
     await authMiddleware(req, res, next);
     expect(next).toHaveBeenCalled();

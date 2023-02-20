@@ -2,7 +2,7 @@
 
 var _supertest = _interopRequireDefault(require("supertest"));
 
-var _index = _interopRequireDefault(require("./index.test"));
+var _app = _interopRequireDefault(require("./app"));
 
 var _Post = _interopRequireDefault(require("../models/Post"));
 
@@ -18,7 +18,19 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _multer = _interopRequireDefault(require("multer"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
+var _cors = _interopRequireDefault(require("cors"));
+
+var _bodyParser = _interopRequireDefault(require("body-parser"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+_dotenv["default"].config();
+
+_mongoose["default"].Promise = global.Promise;
+
+_mongoose["default"].set("strictQuery", false);
 
 describe('POST /api/posts/create', function () {
   var token;
@@ -32,39 +44,47 @@ describe('POST /api/posts/create', function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            server = _index["default"].listen(3000); // Login user and get JWT token for authentication
+
+            _mongoose["default"].connect(process.env.MONGO_TEST, {
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+              useCreateIndex: true,
+              useFindAndModify: true
+            });
+
+            server = _app["default"].listen(3000); // Login user and get JWT token for authentication
 
             user = new _User["default"]({
               username: "testuser",
               email: "testuser@example.com",
               password: "password"
             });
-            _context.next = 5;
+            _context.next = 6;
             return regeneratorRuntime.awrap(user.save());
 
-          case 5:
-            _context.next = 7;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/login').send({
+          case 6:
+            _context.next = 8;
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/login').send({
               email: user.email,
               password: "password"
             }));
 
-          case 7:
+          case 8:
             response = _context.sent;
             token = response.body.token;
-            _context.next = 13;
+            _context.next = 14;
             break;
 
-          case 11:
-            _context.prev = 11;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](0);
 
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 11]]);
+    }, null, null, [[0, 12]]);
   });
   afterAll(function _callee2() {
     return regeneratorRuntime.async(function _callee2$(_context2) {
@@ -106,7 +126,7 @@ describe('POST /api/posts/create', function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/posts/create').set('Authorization', "Bearer ".concat(token)).field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/posts/create').set('Authorization', "Bearer ".concat(token)).field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
 
           case 3:
             response = _context3.sent;
@@ -147,7 +167,7 @@ describe('POST /api/posts/create', function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/posts/create').set('Authorization', "Bearer ".concat(token)).field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/posts/create').set('Authorization', "Bearer ".concat(token)).field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
 
           case 3:
             response = _context4.sent;
@@ -175,7 +195,7 @@ describe('POST /api/posts/create', function () {
           case 0:
             _context5.prev = 0;
             _context5.next = 3;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/posts/create').field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/posts/create').field('title', 'Test Post').field('desc', 'This is a test post').field('username', 'testuser').field('categories', 'test,post').attach('photo', _fs["default"].readFileSync(_path["default"].join(__dirname, "blogImg.jpg")), "blogImg.jpg"));
 
           case 3:
             response = _context5.sent;

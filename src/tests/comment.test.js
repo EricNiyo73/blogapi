@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken';
 import request from 'supertest';
-import app from './index.test';
+import app from './app.js';
 import mongoose from 'mongoose';
 import Blog from '../models/Post';
 import User from '../models/User';
 import fs from 'fs';
 import dotenv from "dotenv";
 dotenv.config();
+mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
+
 describe('POST /blogs/:blogId/comments', () => {
   let authToken;
   let blog;
@@ -14,6 +17,13 @@ describe('POST /blogs/:blogId/comments', () => {
   jest.setTimeout(30000)
   beforeAll(async () => {
     try{
+      mongoose
+      .connect(process.env.MONGO_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify:true
+      })
       server = app.listen(3001);
     // Create a user and get an auth token
     const user = new User({

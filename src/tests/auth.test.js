@@ -1,12 +1,24 @@
 import request from 'supertest';
-import app from './index.test'; // assuming this is the express app instance
+import app from './app.js'; // assuming this is the express app instance
 import User from '../models/user';
 import  mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
+import dotenv from "dotenv";
+dotenv.config();
+
+mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
 describe('POST /api/auth/signup', () => {
   let server;
     jest.setTimeout(30000)
     beforeAll(() => {
+      mongoose
+      .connect(process.env.MONGO_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify:true
+      })
       server = app.listen(3000); // start server
     });
     afterAll(async () => {

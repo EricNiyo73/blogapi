@@ -8,19 +8,34 @@ var _mustHveAccount = _interopRequireDefault(require("../middlewires/mustHveAcco
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
-var _index = _interopRequireDefault(require("./index.test"));
+var _app = _interopRequireDefault(require("./app"));
 
 var _supertest = _interopRequireDefault(require("supertest"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// Define mock user data for testing
+_dotenv["default"].config();
+
+_mongoose["default"].Promise = global.Promise;
+
+_mongoose["default"].set("strictQuery", false); // Define mock user data for testing
+
+
 describe('authMiddleware', function () {
   var req, res, next;
   var server;
   beforeAll(function () {
     try {
-      server = _index["default"].listen(3000);
+      _mongoose["default"].connect(process.env.MONGO_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: true
+      });
+
+      server = _app["default"].listen(3000);
     } catch (err) {}
   });
   afterAll(function _callee() {
@@ -74,14 +89,14 @@ describe('authMiddleware', function () {
               password: 'testpassword'
             };
             _context2.next = 4;
-            return regeneratorRuntime.awrap((0, _supertest["default"])(_index["default"]).post('/api/auth/signup').send(user));
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).post('/api/auth/signup').send(user));
 
           case 4:
             _res = _context2.sent;
             token = _jsonwebtoken["default"].sign({
               id: user._id
             }, process.env.JWT_SECRET);
-            req.headers.authorization = "Bearer ".concat(token);
+            req.headers.authorization = "".concat(token);
             _User["default"].findById = jest.fn().mockResolvedValue(user);
             _context2.next = 10;
             return regeneratorRuntime.awrap((0, _mustHveAccount["default"])(req, _res, next));
