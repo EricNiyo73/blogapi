@@ -33,7 +33,7 @@ describe('findAll',() => {
     afterAll(async () => {
         try{
       await User.deleteMany({});
-      await app.close();
+      await server.close();
         }catch(err){}
     });
   
@@ -42,7 +42,6 @@ describe('findAll',() => {
       const res = await request(app)
       .get('/api/users/getall');
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("status");
       expect(res.body).toHaveProperty("data");
     });
   

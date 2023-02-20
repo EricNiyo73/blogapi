@@ -71,26 +71,49 @@ export const create = async (req, res) => {
 //UPDATE POST
 export const updatep = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
-    // if (post.username === req.body.username) {
-      try {
-        const updatedPost = await Post.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-     return res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    // } else {
-    //   return res.status(401).json("You can update only your post!");
-    // }
-  } catch (err) {
-    return res.status(500).json(err);
+    const postId = req.params.id;
+    const result = await cloudinary.uploader.upload(req.file.path);
+    
+    const updatedPost = await Post.findByIdAndUpdate(
+      { _id: postId },
+      {
+        photo: result.secure_url,
+        title: req.body.title,
+        desc:req.body.desc,
+        categories: req.body.categories
+      },
+      { new: true }
+    );
+  
+    return res.status(200).json({
+      updatedPost,
+      status: "your post was successfully updated"
+    });
+  
+  } catch (error) {
+    return  res.status(500).json(error)
   }
+  // try {
+  //   const post = await Post.findById(req.params.id);
+  //   // if (post.username === req.body.username) {
+  //     try {
+  //       const updatedPost = await Post.findByIdAndUpdate(
+  //         req.params.id,
+  //         {
+  //           $set: req.body,
+  //         },
+  //         { new: true }
+  //       );
+  //    return res.status(200).json(updatedPost);
+  //     } catch (err) {
+  //       res.status(500).json(err);
+  //     }
+  //   // } else {
+  //   //   return res.status(401).json("You can update only your post!");
+  //   // }
+  // } catch (err) {
+  //   return res.status(500).json(err);
+  // }
 };
 
 //DELETE POST

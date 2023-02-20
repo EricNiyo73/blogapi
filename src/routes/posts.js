@@ -86,7 +86,7 @@ router.get('/', findAll);
  * @swagger
  * /api/posts/{id}:
  *  get:
- *    description: Use to retrieve a single post by its ID
+ *    summary: Use to retrieve a single post by its ID
  *    tags: [Blog]
  *    parameters:
  *      - in: path
@@ -177,7 +177,7 @@ router.put('/:id',authentication, updatep);
  * @swagger
  * /api/posts/{id}:
  *  delete:
- *    description: Use to delete a post by its ID
+ *    summary: Use to delete a post by its ID
  *    tags: [Blog]
  *    parameters:
  *      - in: path
@@ -188,7 +188,7 @@ router.put('/:id',authentication, updatep);
  *      - in: body
  *        name: username
  *        type: string
- *        required: true
+ *        required: false
  *        description: The username of the post owner
  *    security:
  *      - bearerAuth: []

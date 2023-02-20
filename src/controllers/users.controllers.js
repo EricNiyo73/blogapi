@@ -34,7 +34,7 @@ export const update = async (req, res) => {
 
 //DELETE
 export  const deletet = async (req, res) => {
-  if (req.body.userId === req.params.id) {
+  // if (req.body.userId === req.params.id) {
     try {
       const user = await User.findById(req.params.id);
       await User.findByIdAndDelete(req.params.id);
@@ -49,9 +49,9 @@ export  const deletet = async (req, res) => {
     } catch (err) {
       return res.status(404).json("User not found!");
     }
-  } else {
-    return res.status(401).json("You can delete only your account!");
-  }
+  // } else {
+  //   return res.status(401).json("You can delete only your account!");
+  // }
 };
 
 //GET USER

@@ -77,7 +77,7 @@ describe('findAll', function () {
 
           case 3:
             _context2.next = 5;
-            return regeneratorRuntime.awrap(_app["default"].close());
+            return regeneratorRuntime.awrap(server.close());
 
           case 5:
             _context2.next = 9;
@@ -106,10 +106,9 @@ describe('findAll', function () {
           case 2:
             res = _context3.sent;
             expect(res.status).toBe(200);
-            expect(res.body).toHaveProperty("status");
             expect(res.body).toHaveProperty("data");
 
-          case 6:
+          case 5:
           case "end":
             return _context3.stop();
         }

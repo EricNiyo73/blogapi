@@ -29,7 +29,7 @@ describe('POST /api/posts/create', () => {
     useCreateIndex: true,
     useFindAndModify:true
   })
-      server = app.listen(3000);
+      server = app.listen(3003);
     // Login user and get JWT token for authentication
     user = new User({
       username: "testuser",

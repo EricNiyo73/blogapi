@@ -26,7 +26,7 @@ var router = (0, _express["default"])();
  *            type: string
  *          required: true
  *          description: The ID of the user to update
- *        - in: body
+ *        - in: formData
  *          name: user information
  *          required: true
  *          description: The updated user information
@@ -71,6 +71,30 @@ var router = (0, _express["default"])();
  *          description: Internal server error
  */
 router.put('/:id', _usersControllers.update); // router.get('/getone/:id',findone);
+
+/**
+* @swagger
+* /api/users/getall:
+*   get:
+*     summary: Retrieve a list of users
+*     tags: [users]
+*     description: Returns a list of all users.
+*     responses:
+*       200:
+*         description: A list of users
+*         content:
+*           application/json:
+*             schema:
+*               type: array
+*               items:
+*                 $ref: '#/components/schemas/User'
+*       500:
+*         description: Internal server error
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/Error'
+*/
 
 router.get("/getall", _usersControllers.findAll);
 /**

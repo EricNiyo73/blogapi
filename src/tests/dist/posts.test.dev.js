@@ -52,7 +52,7 @@ describe('POST /api/posts/create', function () {
               useFindAndModify: true
             });
 
-            server = _app["default"].listen(3000); // Login user and get JWT token for authentication
+            server = _app["default"].listen(3003); // Login user and get JWT token for authentication
 
             user = new _User["default"]({
               username: "testuser",
