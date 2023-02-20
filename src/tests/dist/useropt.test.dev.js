@@ -1,36 +1,32 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _User = _interopRequireDefault(require("../models/User.js"));
 
-var _index = _interopRequireDefault(require("./index.test"));
+var _app = _interopRequireDefault(require("./app.js"));
 
 var _usersControllers = require("../controllers/users.controllers.js");
 
+var _supertest = _interopRequireDefault(require("supertest"));
+
 var _dotenv = _interopRequireDefault(require("dotenv"));
-
-var http = _interopRequireWildcard(require("http"));
-
-var supertest = _interopRequireWildcard(require("supertest"));
-
-var Koa = _interopRequireWildcard(require("koa"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// import request from 'supertest';
-var apps = new Koa();
-
+// import * as http from 'http';
+// // import * as supertest from 'supertest';
+// import * as Koa from 'koa';
+// const apps = new Koa();
 _dotenv["default"].config();
+
+_mongoose["default"].Promise = global.Promise;
+
+_mongoose["default"].set("strictQuery", false);
 
 describe('findAll', function () {
   var testUsers;
+  var server;
   jest.setTimeout(30000);
   beforeAll(function _callee() {
     return regeneratorRuntime.async(function _callee$(_context) {
@@ -38,28 +34,37 @@ describe('findAll', function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+
+            _mongoose["default"].connect(process.env.MONGO_TEST, {
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+              useCreateIndex: true,
+              useFindAndModify: true
+            });
+
+            server = _app["default"].listen(3000);
             testUsers = new _User["default"]({
               username: 'John Doe',
               email: 'johndoe@example.com',
               password: 'password123'
             });
-            _context.next = 4;
+            _context.next = 6;
             return regeneratorRuntime.awrap(testUsers.save());
 
-          case 4:
-            _context.next = 8;
+          case 6:
+            _context.next = 10;
             break;
 
-          case 6:
-            _context.prev = 6;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
 
-          case 8:
+          case 10:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 6]]);
+    }, null, null, [[0, 8]]);
   });
   afterAll(function _callee2() {
     return regeneratorRuntime.async(function _callee2$(_context2) {
@@ -72,7 +77,7 @@ describe('findAll', function () {
 
           case 3:
             _context2.next = 5;
-            return regeneratorRuntime.awrap(_index["default"].close());
+            return regeneratorRuntime.awrap(_app["default"].close());
 
           case 5:
             _context2.next = 9;
@@ -90,22 +95,21 @@ describe('findAll', function () {
     }, null, null, [[0, 7]]);
   });
   it('should return all users', function _callee3() {
-    var apptest, res;
+    var res;
     return regeneratorRuntime.async(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            apptest = supertest(http.createServer(apps.callback()));
-            _context3.next = 3;
-            return regeneratorRuntime.awrap(apptest(_index["default"]).get('/api/users/getall'));
+            _context3.next = 2;
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).get('/api/users/getall'));
 
-          case 3:
+          case 2:
             res = _context3.sent;
             expect(res.status).toBe(200);
             expect(res.body).toHaveProperty("status");
             expect(res.body).toHaveProperty("data");
 
-          case 7:
+          case 6:
           case "end":
             return _context3.stop();
         }
@@ -113,7 +117,7 @@ describe('findAll', function () {
     });
   });
   it('should return an error message when there is an error', function _callee4() {
-    var apptest, res;
+    var res;
     return regeneratorRuntime.async(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -122,16 +126,15 @@ describe('findAll', function () {
             return regeneratorRuntime.awrap(_mongoose["default"].connection.close());
 
           case 2:
-            apptest = supertest(http.createServer(apps.callback()));
-            _context4.next = 5;
-            return regeneratorRuntime.awrap(apptest(_index["default"]).get('/api/users/getall'));
+            _context4.next = 4;
+            return regeneratorRuntime.awrap((0, _supertest["default"])(_app["default"]).get('/api/users/getall'));
 
-          case 5:
+          case 4:
             res = _context4.sent;
             expect(res.status).toBe(500);
             expect(res.body.message).toBeDefined();
 
-          case 8:
+          case 7:
           case "end":
             return _context4.stop();
         }
